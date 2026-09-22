@@ -141,6 +141,14 @@
   <ItemGroup>
     <ClCompile Include="CS213-Assighment1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\Image_Class.h" />
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\stb_image.h" />
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\stb_image_write.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="building.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

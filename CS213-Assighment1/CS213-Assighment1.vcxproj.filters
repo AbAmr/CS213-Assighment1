@@ -19,4 +19,20 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\Image_Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\w10\Downloads\CS213-2026-2027-Assignemnt1-LibraryAndExample\CS213-2026-2027-Assignemnt1-LibraryAndExample\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="building.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
