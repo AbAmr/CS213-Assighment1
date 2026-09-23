@@ -36,7 +36,6 @@ short readFilterChoice()
 	return filterChoice;
 }
 
-
 //A part of add frame to a picture filter
 void addSimpleFrame(string imgName)
 {
@@ -55,9 +54,9 @@ void addSimpleFrame(string imgName)
 			if (i >= width - thickness || i < thickness
 				|| j < thickness || j >= height - thickness)
 			{
-				img.setPixel(i, j, 0, 0);
-				img.setPixel(i, j, 1, 0);
-				img.setPixel(i, j, 2, 160);
+				img.setPixel(i, j, 0, 20);
+				img.setPixel(i, j, 1, 30);
+				img.setPixel(i, j, 2, 70);
 			}
 		}
 	}
@@ -78,41 +77,47 @@ void addFancyFrame(string imgName)
 
 	int width = img.width, height = img.height;
 	int minDim = min(width, height);
-	int BlueThickness = minDim * 0.03;
-	int WhiteThickness = minDim * 0.03;
+	int BlueThickness = minDim * 0.06;
+	int YellowThickness = minDim * 0.03;
 	int corner = minDim * 0.03;
 
 	for (int i = 0; i < width; i++)
 	{
 		for (int j = 0; j < height; j++)
 		{
-			bool isCorner = (i < corner && j < corner) || (width - i < corner && height - j < corner)
-				|| (height - j < corner && i < corner) || (j < corner && width - i < corner);
+			bool isCorner = (i < corner && j < corner) || (i >= width - corner && j < corner)
+				|| (i < corner && j >= height - corner) || (i >= width - corner && j >= height - corner);
 
 			bool isBlueThickness = (i >= width - BlueThickness || i < BlueThickness
 				|| j < BlueThickness || j >= height - BlueThickness);
 
-			bool isWhiteThickness = (i >= width - WhiteThickness || i < WhiteThickness
-				|| j < WhiteThickness || j >= height - WhiteThickness);
+			bool leftLine = (i >= YellowThickness && i < BlueThickness) && (j > YellowThickness && j < height - YellowThickness);
 
+			bool rightLine = (i <= width - YellowThickness && i > width - BlueThickness) && (j > YellowThickness && j < height - YellowThickness);
+
+			bool topLine = (j >= YellowThickness && j < BlueThickness) && (i > YellowThickness && i < width - YellowThickness);
+
+			bool bottomLine = (j <= height - YellowThickness && j >= height - BlueThickness) && (i > YellowThickness && i < width - YellowThickness);
+
+			if (isBlueThickness)
+			{
+				img.setPixel(i, j, 0, 20);
+				img.setPixel(i, j, 1, 30);
+				img.setPixel(i, j, 2, 70);
+			}
 
 			if (isCorner)
 			{
-				img.setPixel(i, j, 0, 255);
-				img.setPixel(i, j, 1, 255);
-				img.setPixel(i, j, 2, 255);
+				img.setPixel(i, j, 0, 230);
+				img.setPixel(i, j, 1, 190);
+				img.setPixel(i, j, 2, 70);
 			}
-			else if (isBlueThickness && !isCorner)
+
+			if (leftLine || rightLine || topLine || bottomLine)
 			{
-				img.setPixel(i, j, 0, 0);
-				img.setPixel(i, j, 1, 0);
-				img.setPixel(i, j, 2, 160);
-			}
-			else if (!isBlueThickness && !isCorner && isWhiteThickness)
-			{
-				img.setPixel(i, j, 0, 0);
-				img.setPixel(i, j, 1, 255);
-				img.setPixel(i, j, 2, 255);
+				img.setPixel(i, j, 0, 200);
+				img.setPixel(i, j, 1, 160);
+				img.setPixel(i, j, 2, 50);
 			}
 		}
 	}
@@ -161,5 +166,5 @@ void addFrame()
 
 int main()
 {
-	addFrame();
+	
 }

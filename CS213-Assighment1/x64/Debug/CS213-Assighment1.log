@@ -1,0 +1,6 @@
+﻿  CS213-Assighment1.cpp
+D:\Flowchart Projects\CS213-Assighment1\CS213-Assighment1\CS213-Assighment1.cpp(49,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Flowchart Projects\CS213-Assighment1\CS213-Assighment1\CS213-Assighment1.cpp(81,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Flowchart Projects\CS213-Assighment1\CS213-Assighment1\CS213-Assighment1.cpp(82,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\Flowchart Projects\CS213-Assighment1\CS213-Assighment1\CS213-Assighment1.cpp(83,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  CS213-Assighment1.vcxproj -> D:\Flowchart Projects\CS213-Assighment1\x64\Debug\CS213-Assighment1.exe
