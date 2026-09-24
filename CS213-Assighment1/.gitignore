@@ -1,0 +1,16 @@
+# Visual Studio temp files
+.vs/
+x64/
+Debug/
+Release/
+
+# Executables & build outputs
+*.exe
+*.pdb
+*.obj
+*.ilk
+
+# All temp images except building.jpg
+CS213-Assighment1/*.png
+CS213-Assighment1/*.jpg
+!CS213-Assighment1/building.jpg
