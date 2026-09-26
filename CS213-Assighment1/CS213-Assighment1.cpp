@@ -1,9 +1,9 @@
-#include <iostream>
-#include "Image_Class.h"
-#include <algorithm>
-
-using namespace std;
-
+//#include <iostream>
+//#include "Image_Class.h"
+//#include <algorithm>
+//
+//using namespace std;
+//
 //void printFiltersMenu()
 //{
 //	cout << "\n=============================================\n";
@@ -258,50 +258,128 @@ using namespace std;
 //	PerformTheResize(imgName, resizeChoice);
 //
 //}
-
-// Black and white filter(2)
-struct Pixel {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-};
-
-void blackAndWhiteFilter(Image& img) {
-	for (int i = 0; i < img.width; ++i) {
-		for (int j = 0; j < img.height; ++j) {
-			Pixel p;
-			p.r = img.getPixel(i, j, 0);
-			p.g = img.getPixel(i, j, 1);
-			p.b = img.getPixel(i, j, 2);
-
-			int gray = (p.r + p.g + p.b) / 3;
-
-			unsigned char bwValue = (gray > 127) ? 255 : 0;
-
-			img.setPixel(i, j, 0, bwValue);
-			img.setPixel(i, j, 1, bwValue);
-			img.setPixel(i, j, 2, bwValue);
-		}
-	}
-}
-
-int main()
-{
-	string imageName;
-	cout << "Enter the image name?";
-	cin >> imageName;
-
-	Image img;
-	img = Image(imageName.c_str()); // تحويل ال string إلى char* ليتوافق مع بناء الكلاس
-	blackAndWhiteFilter(img);
-
-	img.saveImage("Black_White_2.jpg");
-	cout << "Image processed and saved successfully as Black_White_2.jpg!" << endl;
-
-	return 0;
-}
-
+//
+//// Black and white filter(2)
+//struct Pixel {
+//	unsigned char r;
+//	unsigned char g;
+//	unsigned char b;
+//};
+//
+//void blackAndWhiteFilter(Image& img) {
+//	for (int i = 0; i < img.width; ++i) {
+//		for (int j = 0; j < img.height; ++j) {
+//			Pixel p;
+//			p.r = img.getPixel(i, j, 0);
+//			p.g = img.getPixel(i, j, 1);
+//			p.b = img.getPixel(i, j, 2);
+//
+//			int gray = (p.r + p.g + p.b) / 3;
+//
+//			unsigned char bwValue = (gray > 127) ? 255 : 0;
+//
+//			img.setPixel(i, j, 0, bwValue);
+//			img.setPixel(i, j, 1, bwValue);
+//			img.setPixel(i, j, 2, bwValue);
+//		}
+//	}
+//}
+//
 //int main()
 //{
 //	resizeFilter();
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <algorithm>
+#include "Image_Class.h"
+
+using namespace std;
+
+Image loadImagefromUser() {
+	string image_name;
+	cout << "Enter the image name to open : "<<endl;
+	cin >> image_name;
+
+	Image userImage(image_name);
+	return userImage;
+}
+
+void saveImageByUserName(Image& image) {
+	string newImageName;
+	cout << "Enter the new image name to save : "<<endl;
+	cin >> newImageName;
+
+	image.saveImage(newImageName);
+	cout << "Image saved successfully as '" << newImageName << "'!\n";
+}
+
+
+void rotateImage(Image& image) {
+    int choice;
+    cout << "Choose rotation angle:\n";
+    cout << "1. Rotate 90 degrees clockwise\n";
+    cout << "2. Rotate 180 degrees clockwise\n";
+    cout << "3. Rotate 270 degrees clockwise\n";
+    cout << "Enter your choice (1/2/3): ";
+    cin >> choice;
+
+    int originalWidth = image.width;
+    int originalHeight = image.height;
+
+    if (choice == 1) { // Rotate 90
+        Image rotated(originalHeight, originalWidth);
+        for (int i = 0; i < originalHeight; ++i) {
+            for (int j = 0; j < originalWidth; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    rotated.setPixel( originalHeight - 1 - i,j, k, image.getPixel(j, i, k));
+                }
+            }
+        }
+        image = rotated;
+    }
+    else if (choice == 2) { // Rotate 180
+        Image rotated(originalWidth, originalHeight);
+        for (int i = 0; i < originalHeight; ++i) {
+            for (int j = 0; j < originalWidth; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    rotated.setPixel(originalWidth - 1 - j, originalHeight - 1 - i, k, image.getPixel(j, i, k));
+                }
+            }
+        }
+        image = rotated;
+    }
+    else if (choice == 3) { // Rotate 270
+        Image rotated(originalHeight, originalWidth);
+        for (int i = 0; i < originalHeight; ++i) {
+            for (int j = 0; j < originalWidth; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    rotated.setPixel(i,originalWidth - 1 - j, k, image.getPixel(j, i, k));
+                }
+            }
+        }
+        image = rotated;
+    }
+    else {
+        cout << "Invalid choice!\n";
+    }
+}
+
+int main()
+{
+	Image image = loadImagefromUser();
+	rotateImage(image);
+	saveImageByUserName(image);
+}
