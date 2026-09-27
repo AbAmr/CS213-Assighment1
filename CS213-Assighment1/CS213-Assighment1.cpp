@@ -359,6 +359,26 @@ void backToFiltersMenu()
 	printFiltersMenu();
 }
 
+// Grayscale filter (1)
+void applyGrayscale(Image& image) 
+{
+	system("cls");
+
+	for (int i = 0; i < image.height; ++i) {
+		for (int j = 0; j < image.width; ++j) {
+			int red = image(j, i, 0);
+			int green = image(j, i, 1);
+			int blue = image(j, i, 2);
+
+			int avg = (red + green + blue) / 3;
+
+			image(j, i, 0) = avg;
+			image(j, i, 1) = avg;
+			image(j, i, 2) = avg;
+		}
+	}
+}
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -374,7 +394,9 @@ void startProgram()
 		switch (userChoice)
 		{
 		case gray :
-
+			applyGrayscale(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
 		case blAwh:
 			blackAndWhiteFilter(OriginalImage);
