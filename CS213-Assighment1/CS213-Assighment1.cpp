@@ -380,20 +380,20 @@ void applyGrayscale(Image& image)
 }
 
 // Invert image filter (3)
-void invertImage(Image& img) {
-	for (int i = 0; i < img.width; i++) {
-		for (int j = 0; j < img.height; j++) {
-			int red = img(i, j, 0);
-			int green = img(i, j, 1);
-			int blue = img(i, j, 2);
+void invertImage(Image& originalImg) {
+	for (int i = 0; i < originalImg.width; i++) {
+		for (int j = 0; j < originalImg.height; j++) {
+			int red = originalImg(i, j, 0);
+			int green = originalImg(i, j, 1);
+			int blue = originalImg(i, j, 2);
 
 			int newRed = 255 - red;
 			int newGreen = 255 - green;
 			int newBlue = 255 - blue;
 
-			img(i, j, 0) = newRed;
-			img(i, j, 1) = newGreen;
-			img(i, j, 2) = newBlue;
+			originalImg(i, j, 0) = newRed;
+			originalImg(i, j, 1) = newGreen;
+			originalImg(i, j, 2) = newBlue;
 		}
 	}
 }
@@ -470,7 +470,7 @@ void startProgram()
 
 int main()
 {
-	startProgram();
+
 }
 
 
