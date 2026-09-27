@@ -398,6 +398,36 @@ void invertImage(Image& originalImg) {
 	}
 }
 
+// filter Darken and Lighten Image (7)
+void darkenAndLightenImage(Image& img) {
+	int choice;
+	cout << "1 for darken, 2 for lighten: ";
+	cin >> choice;
+
+	for (int i = 0; i < img.width; i++) {
+		for (int j = 0; j < img.height; j++) {
+			int red = img(i, j, 0);
+			int green = img(i, j, 1);
+			int blue = img(i, j, 2);
+
+			if (choice == 1) {
+				red = red / 2;
+				green = green / 2;
+				blue = blue / 2;
+			}
+			else if (choice == 2) {
+				red = (red + 255) / 2;
+				green = (green + 255) / 2;
+				blue = (blue + 255) / 2;
+			}
+
+			img(i, j, 0) = red;
+			img(i, j, 1) = green;
+			img(i, j, 2) = blue;
+		}
+	}
+}
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -470,23 +500,5 @@ void startProgram()
 
 int main()
 {
-
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
