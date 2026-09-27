@@ -379,6 +379,25 @@ void applyGrayscale(Image& image)
 	}
 }
 
+// Invert image filter (3)
+void invertImage(Image& img) {
+	for (int i = 0; i < img.width; i++) {
+		for (int j = 0; j < img.height; j++) {
+			int red = img(i, j, 0);
+			int green = img(i, j, 1);
+			int blue = img(i, j, 2);
+
+			int newRed = 255 - red;
+			int newGreen = 255 - green;
+			int newBlue = 255 - blue;
+
+			img(i, j, 0) = newRed;
+			img(i, j, 1) = newGreen;
+			img(i, j, 2) = newBlue;
+		}
+	}
+}
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -404,7 +423,9 @@ void startProgram()
 			backToFiltersMenu();
 			break;
 		case Invert:
-
+			invertImage(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
 		case Frame:
 			AddFrameFilter(OriginalImage);
