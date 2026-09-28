@@ -1,11 +1,23 @@
+/*
+  Assignment 1 - OOP Course
+  ----------------------------------------------------------------------
+  Team Members:
+  1. Abdelrahman Amr Rashad | ID: 20250366 | Section:  | Filters: 4, 8
+  2. Zeyad Ahmed Abdullah   | ID: 20250244 | Section:  | Filters: 2, 6
+  3. Ahmed Tarek El-gelany  | ID: 20250035 | Section:  | Filters: 1, 5
+  4. Seif El-Deen Hessan    | ID: 20250310 | Section:  | Filters: 3, 7
+  ----------------------------------------------------------------------
+*/
+
 #include <iostream>
 #include "Image_Class.h"
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
 //All filter choices
-enum enFiltersChoice {gray =1 , blAwh , Invert , Frame , Flip , Rotate , DarALig , Resize , eExit};
+enum enFiltersChoice {grayScale =1 , BlackAndWhite , Invert , AddFrame , Flip , Rotate , DarkenAndLighten , Resize , eExit};
 
 //Asks the user to enter the name of the image to add filter
 Image loadImagefromUser() 
@@ -36,7 +48,7 @@ void printFiltersMenu()
 {
 	system("cls");
 
-	cout << "\n=============================================\n";
+	cout << "=============================================\n";
 	cout << "\t\tFilters Menu";
 	cout << "\n=============================================\n\n";
 	cout << "[1] Grayscale Conversion\n";
@@ -155,7 +167,7 @@ void AddFrameFilter(Image& OriginalImage)
 
 	int frameChoice;
 
-	cout << "\nWhat frame do you prefer?\n";
+	cout << "What frame do you prefer?\n";
 	cout << "\n[1] Simple Frame\n";
 	cout << "\n[2] Fancy Frame\n\n";
 	cout << "Enter your choice...?\n";
@@ -191,7 +203,7 @@ void PerformTheResize(Image & OriginalImage, int resizeChoice)
 
 	if (resizeChoice == 1)
 	{
-		cout << "\nPlease, enter the width..?\n";
+		cout << "Please, enter the width..?\n";
 		cin >> ResizedWidth;
 
 		while (ResizedWidth <= 0)
@@ -211,7 +223,7 @@ void PerformTheResize(Image & OriginalImage, int resizeChoice)
 	}
 	else
 	{
-		cout << "\nPlease, enter the ratio..?\n";
+		cout << "Please, enter the ratio..?\n";
 		cin >> ratio;
 
 		while (ratio <= 0)
@@ -243,13 +255,13 @@ void PerformTheResize(Image & OriginalImage, int resizeChoice)
 }
 
 // Resize picture dimensions (Filter 8)
-void resizeFilter(Image& OriginalImage)
+void resizeFilter(Image & OriginalImage)
 {
 	system("cls");
 
 	int resizeChoice;
 
-	cout << "\nWhat method do you prefer to use?\n";
+	cout << "What method do you prefer to use?\n";
 	cout << "\n[1] Resize using Dimensions\n";
 	cout << "\n[2] Resize using Ratio\n\n";
 	cout << "Enter your choice...?\n";
@@ -266,8 +278,9 @@ void resizeFilter(Image& OriginalImage)
 
 }
 
-// Black and white filter(2)
-struct Pixel {
+// Black and white (Filter 2)
+struct Pixel 
+{
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
@@ -295,6 +308,7 @@ void blackAndWhiteFilter(Image& img)
 	}
 }
 
+//Rotate Image (Filter 6)
 void rotateImage(Image& image) 
 {
 	system("cls");
@@ -359,6 +373,23 @@ void backToFiltersMenu()
 	printFiltersMenu();
 }
 
+void printCredits()
+{
+	system("cls");
+
+	cout << "========================================================================\n";
+	cout << "\t\tThe Program has been DONE by\n";
+	cout << "========================================================================\n";
+	cout << left << setw(25) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8\n";
+	cout << left << setw(25) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6\n";
+	cout << left << setw(25) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5\n";
+	cout << left << setw(25) << "Seif El-Deen Hessan" << " | ID: " << "20250310" << " | " << "Filters: 3/7\n";
+	cout << "========================================================================\n\n";
+
+	cout << "Press any key to end the program....";
+	system("pause>0");
+}
+
 // Grayscale filter (1)
 void applyGrayscale(Image& image) 
 {
@@ -399,7 +430,10 @@ void invertImage(Image& originalImg) {
 }
 
 // filter Darken and Lighten Image (7)
-void darkenAndLightenImage(Image& img) {
+void darkenAndLightenImage(Image& img) 
+{
+	system("cls");
+
 	int choice;
 	cout << "1 for darken, 2 for lighten: ";
 	cin >> choice;
@@ -442,12 +476,12 @@ void startProgram()
 	{
 		switch (userChoice)
 		{
-		case gray :
+		case grayScale :
 			applyGrayscale(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
-		case blAwh:
+		case BlackAndWhite:
 			blackAndWhiteFilter(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
@@ -457,7 +491,7 @@ void startProgram()
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
-		case Frame:
+		case AddFrame:
 			AddFrameFilter(OriginalImage);
 			backToFiltersMenu();
 			break;
@@ -469,15 +503,17 @@ void startProgram()
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
-		case DarALig:
-
+		case DarkenAndLighten:
+			darkenAndLightenImage(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
 		case Resize:
 			resizeFilter(OriginalImage);
 			backToFiltersMenu();
 			break;
 		case eExit:
-			system("cls");
+			printCredits();
 			addAnotherFilter = false;
 			break;
 		}
@@ -488,7 +524,7 @@ void startProgram()
 
 			if (userChoice == eExit)
 			{
-				system("cls");
+				printCredits();
 				break;
 			}
 
@@ -500,5 +536,24 @@ void startProgram()
 
 int main()
 {
-	
+	startProgram();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
