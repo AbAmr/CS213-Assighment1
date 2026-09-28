@@ -5,7 +5,7 @@
   1. Abdelrahman Amr Rashad | ID: 20250366 | Section:  | Filters: 4, 8
   2. Zeyad Ahmed Abdullah   | ID: 20250244 | Section:  | Filters: 2, 6
   3. Ahmed Tarek El-gelany  | ID: 20250035 | Section:  | Filters: 1, 5
-  4. Seif El-Deen Hessan    | ID: 20250310 | Section:  | Filters: 3, 7
+  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section:  | Filters: 3, 7
   ----------------------------------------------------------------------
 */
 
@@ -377,14 +377,14 @@ void printCredits()
 {
 	system("cls");
 
-	cout << "========================================================================\n";
+	cout << "=====================================================================\n";
 	cout << "\t\tThe Program has been DONE by\n";
-	cout << "========================================================================\n";
-	cout << left << setw(25) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8\n";
-	cout << left << setw(25) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6\n";
-	cout << left << setw(25) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5\n";
-	cout << left << setw(25) << "Seif El-Deen Hessan" << " | ID: " << "20250310" << " | " << "Filters: 3/7\n";
-	cout << "========================================================================\n\n";
+	cout << "=====================================================================\n";
+	cout << left << setw(32) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8\n";
+	cout << left << setw(32) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6\n";
+	cout << left << setw(32) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5\n";
+	cout << left << setw(32) << "Seif El-Deen Mohamed Hassanin" << " | ID: " << "20250310" << " | " << "Filters: 3/7\n";
+	cout << "=====================================================================\n\n";
 
 	cout << "Press any key to end the program....";
 	system("pause>0");
