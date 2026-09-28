@@ -461,7 +461,37 @@ void darkenAndLightenImage(Image& img)
 		}
 	}
 }
+//Flip Image Filter (5)
+void flipImage(Image& img) {
+	int choice;
+	cout << "1. Horizontal Flip\n";
+	cout << "2. Vertical Flip\n";
+	cin >> choice;
 
+	if (choice == 1) {
+		for (int i = 0; i < img.width / 2; i++) {
+			for (int j = 0; j < img.height; j++) {
+				for (int k = 0; k < 3; k++) {
+					int temp = img(i, j, k);
+					img(i, j, k) = img(img.width - 1 - i, j, k);
+					img(img.width - 1 - i, j, k) = temp;
+				}
+			}
+		}
+	}
+
+	else if (choice == 2) {
+		for (int i = 0; i < img.width; i++) {
+			for (int j = 0; j < img.height / 2; j++) {
+				for (int k = 0; k < 3; k++) {
+					int temp = img(i, j, k);
+					img(i, j, k) = img(i, img.height - 1 - j, k);
+					img(i, img.height - 1 - j, k) = temp;
+				}
+			}
+		}
+	}
+}
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -496,7 +526,9 @@ void startProgram()
 			backToFiltersMenu();
 			break;
 		case Flip:
-
+			flipImage(OriginalImage);
+		    saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
 		case Rotate:
 			rotateImage(OriginalImage);
