@@ -13,6 +13,7 @@
 #include "Image_Class.h"
 #include <algorithm>
 #include <iomanip>
+#include<cmath>
 
 using namespace std;
 
@@ -497,6 +498,61 @@ void flipImage(Image& img)
 	}
 }
 
+// filter (10)
+
+void detectEdges(Image& img)
+{
+	int width = img.width;
+	int height = img.height;
+
+	Image edgeImage(width, height);
+
+	int threshold = 30;
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+
+			int R = img.getPixel(j, i, 0);
+			int G = img.getPixel(j, i, 1);
+			int B = img.getPixel(j, i, 2);
+			int Gray = (R + G + B) / 3;
+
+			int rightGray = Gray;
+			int downGray = Gray;
+
+			if (j + 1 < width)
+			{
+				int rightR = img.getPixel(j + 1, i, 0);
+				int rightG = img.getPixel(j + 1, i, 1);
+				int rightB = img.getPixel(j + 1, i, 2);
+				rightGray = (rightR + rightG + rightB) / 3;
+			}
+
+			if (i + 1 < height) {
+				int downR = img.getPixel(j, i + 1, 0);
+				int downG = img.getPixel(j, i + 1, 1);
+				int downB = img.getPixel(j, i + 1, 2);
+				downGray = (downR + downG + downB) / 3;
+			}
+			int diffX = abs(Gray - rightGray);
+			int diffY = abs(Gray - downGray);
+
+			if (diffX > threshold || diffY > threshold) {
+				edgeImage.setPixel(j, i, 0, 0);
+				edgeImage.setPixel(j, i, 1, 0);
+				edgeImage.setPixel(j, i, 2, 0);
+			}
+			else {
+				edgeImage.setPixel(j, i, 0, 255);
+				edgeImage.setPixel(j, i, 1, 255);
+				edgeImage.setPixel(j, i, 2, 255);
+			}
+		}
+	}
+	img = edgeImage;
+}
+
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -575,22 +631,3 @@ int main()
 {
 	startProgram();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
