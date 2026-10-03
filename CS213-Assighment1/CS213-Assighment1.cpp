@@ -1,12 +1,12 @@
 /*
   Assignment 1 - OOP Course
-  ---------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------------------
   Team Members:
-  1. Abdelrahman Amr Rashad           | ID: 20250366 | Section:  | Filters: 4, 8
-  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section:  | Filters: 2, 6
-  3. Ahmed Tarek El-gelany            | ID: 20250035 | Section:  | Filters: 1, 5
-  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section:  | Filters: 3, 7
-  ---------------------------------------------------------------------------------
+  1. Abdelrahman Amr Rashad           | ID: 20250366 | Section: S29 , S30 | Filters: 4, 8
+  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section: S29 , S30 | Filters: 2, 6
+  3. Ahmed Tarek El-gelany            | ID: 20250035 | Section: S29 , S30 | Filters: 1, 5
+  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section: S29 , S30 | Filters: 3, 7
+  ------------------------------------------------------------------------------------------
 */
 
 #include <iostream>
