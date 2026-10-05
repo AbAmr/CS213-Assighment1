@@ -707,6 +707,36 @@ void cropImage(Image& img)
 
 	img = cropped;
 }
+//Filter(13)
+void sunlight(Image& img)
+{
+	for (int i = 0; i < img.width; i++)
+	{
+		for (int j = 0; j < img.height; j++)
+		{
+			int red = img(i, j, 0);
+			int green = img(i, j, 1);
+			int blue = img(i, j, 2);
+
+			red = red + 50;
+			green = green + 30;
+			blue = blue + 10;
+
+			if (red > 255)
+				red = 255;
+
+			if (green > 255)
+				green = 255;
+
+			if (blue > 255)
+				blue = 255;
+
+			img(i, j, 0) = red;
+			img(i, j, 1) = green;
+			img(i, j, 2) = blue;
+		}
+	}
+}
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -775,6 +805,11 @@ void startProgram()
 			break;
 		case Blur:
 			applyOptimizedBlur(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case AddSunlight:
+			sunlight(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
