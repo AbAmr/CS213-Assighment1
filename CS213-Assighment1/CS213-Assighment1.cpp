@@ -676,6 +676,37 @@ void applyOptimizedBlur(Image& img)
 		}
 	}
 }
+// CropImageFilter(11)
+void cropImage(Image& img)
+{
+	int x, y, width, height;
+
+	cout << "Enter x: ";
+	cin >> x;
+
+	cout << "Enter y: ";
+	cin >> y;
+
+	cout << "Enter width: ";
+	cin >> width;
+
+	cout << "Enter height: ";
+	cin >> height;
+
+	Image cropped(width, height);
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+		{
+			cropped(i, j, 0) = img(x + i, y + j, 0);
+			cropped(i, j, 1) = img(x + i, y + j, 1);
+			cropped(i, j, 2) = img(x + i, y + j, 2);
+		}
+	}
+
+	img = cropped;
+}
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -737,6 +768,9 @@ void startProgram()
 			backToFiltersMenu();
 			break;
 		case Crop:
+			cropImage(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 
 			break;
 		case Blur:
