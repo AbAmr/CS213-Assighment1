@@ -13,12 +13,14 @@
 #include "Image_Class.h"
 #include <algorithm>
 #include <iomanip>
-#include<cmath>
+#include <cmath>
+#include <vector>
 
 using namespace std;
 
 //All filter choices
-enum enFiltersChoice {GrayScale =1 , BlackAndWhite , Invert , AddFrame , Flip , Rotate , DarkenAndLighten , Resize , eExit};
+enum enFiltersChoice {GrayScale =1 , BlackAndWhite , Invert , AddFrame , Flip , Rotate , DarkenAndLighten , Resize
+	,Merge, DetectEdge , Crop, Blur, AddSunlight, TvStudioEffect, PurpleFilter, InfraredFilter , eExit};
 
 //Asks the user to enter the name of the image to add filter
 Image loadImagefromUser() 
@@ -60,7 +62,15 @@ void printFiltersMenu()
 	cout << "[6] Rotate Image\n";
 	cout << "[7] Darken and Lighten Image\n";
 	cout << "[8] Resize Image\n";
-	cout << "[9] Exit Program\n";
+	cout << "[9] Merge Images\n";
+	cout << "[10] Detect Edge\n";
+	cout << "[11] Crop Image\n";
+	cout << "[12] Blur Image\n";
+	cout << "[13] Add Sunlight\n";
+	cout << "[14] Tv Studio Effect\n";
+	cout << "[15] Purple Filter\n";
+	cout << "[16] Infrared Filter\n";
+	cout << "[17] Exit Program\n";
 	cout << "\n=============================================\n";
 }
 
@@ -71,9 +81,9 @@ short readFilterChoice()
 	cout << "\nEnter your choice...?\n";
 	cin >> filterChoice;
 
-	while (filterChoice < 1 || filterChoice > 9)
+	while (filterChoice < 1 || filterChoice > 17)
 	{
-		cout << "\nEnter your choice \"It must be from 1 to 9\"...?\n";
+		cout << "\nEnter your choice \"It must be from 1 to 17\"...?\n";
 		cin >> filterChoice;
 	}
 
@@ -499,9 +509,10 @@ void flipImage(Image& img)
 }
 
 // filter (10)
-
 void detectEdges(Image& img)
 {
+	system("cls");
+
 	int width = img.width;
 	int height = img.height;
 
@@ -552,7 +563,119 @@ void detectEdges(Image& img)
 	img = edgeImage;
 }
 
+//part of optimizedBlur filter (12)
+vector<vector<long long>> prefixSumArray(Image& img , int channel)
+{
+	int height = img.height;
+	int width = img.width;
 
+	vector<vector<long long>> vPrefix(width, vector<long long>(height, 0));
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+		{
+			short currentPixel = img.getPixel(i, j, channel);
+			long long sum = 0;
+			long long top = 0;
+			long long topLeft = 0;
+			long long left = 0;
+
+			if (j - 1 < 0) // row out of boundry
+			{
+				if (i - 1 < 0) // column out of boundry
+				{
+					if (i - 1 < 0 && j - 1 < 0)
+					{
+						sum = currentPixel;
+
+						vPrefix[i][j] = sum;
+					}
+				}
+				else
+				{
+					left = vPrefix[i - 1][j];
+					sum = currentPixel + left;
+					vPrefix[i][j] = sum;
+				}
+			}
+			else // row in boundry
+			{
+				if (i - 1 < 0) // column out of boundry
+				{
+					top = vPrefix[i][j-1];
+					sum = currentPixel + top;
+					vPrefix[i][j] = sum;
+				}
+				else // column in boundry
+				{
+					top = vPrefix[i][j - 1];
+					left = vPrefix[i - 1][j];
+					topLeft = vPrefix[i - 1][j - 1];
+					sum = currentPixel + top + left - topLeft;
+					vPrefix[i][j] = sum;
+				}
+			}
+		}
+	}
+
+	return vPrefix;
+}
+
+// filter (12)
+void applyOptimizedBlur(Image& img)
+{
+	vector<vector<long long>> vPrefixRed = prefixSumArray(img, 0);
+	vector<vector<long long>> vPrefixGreen = prefixSumArray(img, 1);
+	vector<vector<long long>> vPrefixBlue = prefixSumArray(img, 2);
+
+	int radius = max(3, (int)(img.width * 0.01));
+
+	for (int i = 0; i < img.width; i++)
+	{
+		for (int j = 0; j < img.height; j++)
+		{
+			int bottomRightBoundryi = min(img.width - 1, i + radius);
+			int bottomRightBoundryj = min(img.height - 1, j + radius);
+
+			int topRighti = bottomRightBoundryi;
+			int topRightj = max(0, j - (radius + 1));
+
+			int bottomLefti = max(0, i - (radius + 1));
+			int bottomLeftj = bottomRightBoundryj;
+
+			int commoni = max(0, i - (radius + 1));
+			int commonj = max(0, j - (radius + 1));
+
+			int startI = max(0, i - radius);
+			int startJ = max(0, j - radius);
+
+			int pixelsX = bottomRightBoundryi - startI + 1;
+			int pixelsY = bottomRightBoundryj - startJ + 1;
+
+			int howManyPixels = pixelsX * pixelsY;
+
+			int sumR = 0;
+			int sumG = 0;
+			int sumB = 0;
+
+			sumR = vPrefixRed[bottomRightBoundryi][bottomRightBoundryj] - vPrefixRed[topRighti][topRightj]
+				- vPrefixRed[bottomLefti][bottomLeftj] + vPrefixRed[commoni][commonj];
+
+			img.setPixel(i, j, 0, sumR / howManyPixels);
+
+			sumG = vPrefixGreen[bottomRightBoundryi][bottomRightBoundryj] - vPrefixGreen[topRighti][topRightj]
+				- vPrefixGreen[bottomLefti][bottomLeftj] + vPrefixGreen[commoni][commonj];
+
+			img.setPixel(i, j, 1, sumG / howManyPixels);
+
+			sumB = vPrefixBlue[bottomRightBoundryi][bottomRightBoundryj] - vPrefixBlue[topRighti][topRightj]
+				- vPrefixBlue[bottomLefti][bottomLeftj] + vPrefixBlue[commoni][commonj];
+
+			img.setPixel(i, j, 2, sumB / howManyPixels);
+		}
+	}
+}
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -603,6 +726,22 @@ void startProgram()
 			break;
 		case Resize:
 			resizeFilter(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case Merge:
+
+			break;
+		case DetectEdge:
+			detectEdges(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case Crop:
+
+			break;
+		case Blur:
+			applyOptimizedBlur(OriginalImage);
+			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
 		case eExit:
