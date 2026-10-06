@@ -1,12 +1,12 @@
 /*
   Assignment 1 - OOP Course
-  ------------------------------------------------------------------------------------------
+  ---------------------------------------------------------------------------------------------------
   Team Members:
-  1. Abdelrahman Amr Rashad           | ID: 20250366 | Section: S29 , S30 | Filters: 4, 8
-  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section: S29 , S30 | Filters: 2, 6
-  3. Ahmed Tarek El-gelany            | ID: 20250035 | Section: S29 , S30 | Filters: 1, 5
-  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section: S29 , S30 | Filters: 3, 7
-  ------------------------------------------------------------------------------------------
+  1. Abdelrahman Amr Rashad           | ID: 20250366 | Section: S29 , S30 | Filters: 4, 8 , 12 , 16
+  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section: S29 , S30 | Filters: 2, 6 , 10 , 14
+  3. Ahmed Tarek El-gelany            | ID: 20250035 | Section: S29 , S30 | Filters: 1, 5 , 9  , 13
+  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section: S29 , S30 | Filters: 3, 7 , 11 , 15
+  ---------------------------------------------------------------------------------------------------
 */
 
 #include <iostream>
@@ -391,10 +391,10 @@ void printCredits()
 	cout << "=====================================================================\n";
 	cout << "\t\tThe Program has been DONE by\n";
 	cout << "=====================================================================\n";
-	cout << left << setw(32) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8\n";
-	cout << left << setw(32) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6\n";
-	cout << left << setw(32) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5\n";
-	cout << left << setw(32) << "Seif El-Deen Mohamed Hassanin" << " | ID: " << "20250310" << " | " << "Filters: 3/7\n";
+	cout << left << setw(32) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8/12/16\n";
+	cout << left << setw(32) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6/10/14\n";
+	cout << left << setw(32) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5/9/13\n";
+	cout << left << setw(32) << "Seif El-Deen Mohamed Hassanin" << " | ID: " << "20250310" << " | " << "Filters: 3/7/11/15\n";
 	cout << "=====================================================================\n\n";
 
 	cout << "Press any key to end the program....";
@@ -676,9 +676,12 @@ void applyOptimizedBlur(Image& img)
 		}
 	}
 }
+
 // CropImageFilter(11)
 void cropImage(Image& img)
 {
+	system("cls");
+
 	int x, y, width, height;
 
 	cout << "Enter x: ";
@@ -707,9 +710,12 @@ void cropImage(Image& img)
 
 	img = cropped;
 }
+
 //Filter(13)
 void sunlight(Image& img)
 {
+	system("cls");
+
 	for (int i = 0; i < img.width; i++)
 	{
 		for (int j = 0; j < img.height; j++)
@@ -737,8 +743,12 @@ void sunlight(Image& img)
 		}
 	}
 }
+
 //Merge Images (Filter 9)
-void MergeImages(Image& image1, Image& image2) {
+void MergeImages(Image& image1, Image& image2) 
+{
+	system("cls");
+
 	int minWidth = std::min(image1.width, image2.width);
 	int minHeight = std::min(image1.height, image2.height);
 
@@ -750,6 +760,30 @@ void MergeImages(Image& image1, Image& image2) {
 		}
 	}
 }
+
+void applyInfraredFilter(Image& img)
+{
+	system("cls");
+
+	int width = img.width, height = img.height;
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+		{
+			for (int c = 0; c < 3; c++)
+			{
+				if (c == 0) img.setPixel(i, j, c, 255);
+				else
+				{
+					short oldChannel = img.getPixel(i, j, c);
+					img.setPixel(i, j, c, 255 - oldChannel);
+				}
+			}
+		}
+	}
+}
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -804,6 +838,8 @@ void startProgram()
 			break;
 		case Merge:
 		{
+			system("cls");
+
 			string secondFileName;
 			cout << "Enter second image filename: ";
 			cin >> secondFileName;
@@ -822,7 +858,6 @@ void startProgram()
 			cropImage(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
-
 			break;
 		case Blur:
 			applyOptimizedBlur(OriginalImage);
@@ -831,6 +866,17 @@ void startProgram()
 			break;
 		case AddSunlight:
 			sunlight(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case TvStudioEffect:
+
+			break;
+		case PurpleFilter:
+
+			break;
+		case InfraredFilter:
+			applyInfraredFilter(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
