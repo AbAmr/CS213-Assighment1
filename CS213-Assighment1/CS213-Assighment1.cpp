@@ -1,4 +1,4 @@
-/*
+﻿/*
   Assignment 1 - OOP Course
   ---------------------------------------------------------------------------------------------------
   Team Members:
@@ -743,6 +743,23 @@ void sunlight(Image& img)
 		}
 	}
 }
+
+//filter (14)
+void TVScanlinesEffect(Image& img)
+{
+	for (int i = 0; i < img.height; i++) {
+		if (i % 10 == 0) {
+			for (int j = 0; j < img.width; j++) {
+				for (int k = 0; k < 3; k++) {
+
+					img.setPixel(j, i, k,img.getPixel(j,i,k)*.1);
+
+				}
+			}
+		}
+    }
+}
+
 
 //Merge Images (Filter 9)
 void MergeImages(Image& image1, Image& image2) 
