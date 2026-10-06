@@ -737,6 +737,19 @@ void sunlight(Image& img)
 		}
 	}
 }
+//Merge Images (Filter 9)
+void MergeImages(Image& image1, Image& image2) {
+	int minWidth = std::min(image1.width, image2.width);
+	int minHeight = std::min(image1.height, image2.height);
+
+	for (int i = 0; i < minWidth; ++i) {
+		for (int j = 0; j < minHeight; ++j) {
+			for (int k = 0; k < image1.channels; ++k) {
+				image1(i, j, k) = (image1(i, j, k) + image2(i, j, k)) / 2;
+			}
+		}
+	}
+}
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
@@ -790,8 +803,16 @@ void startProgram()
 			backToFiltersMenu();
 			break;
 		case Merge:
-
+		{
+			string secondFileName;
+			cout << "Enter second image filename: ";
+			cin >> secondFileName;
+			Image secondImage(secondFileName);
+			MergeImages(OriginalImage, secondImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
+		}
 		case DetectEdge:
 			detectEdges(OriginalImage);
 			saveImageByUserName(OriginalImage);
