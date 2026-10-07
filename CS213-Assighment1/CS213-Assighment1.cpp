@@ -800,6 +800,42 @@ void applyInfraredFilter(Image& img)
 		}
 	}
 }
+//purple filter (15)
+void purpleFilter(Image& img)
+{
+	for (int i = 0; i < img.width; i++)
+	{
+		for (int j = 0; j < img.height; j++)
+		{
+			int red = img(i, j, 0);
+			int green = img(i, j, 1);
+			int blue = img(i, j, 2);
+
+			red = red + 60;
+			green = green - 40;
+			blue = blue + 60;
+
+			if (red > 255)
+			{
+				red = 255;
+			}
+
+			if (green < 0)
+			{
+				green = 0;
+			}
+
+			if (blue > 255)
+			{
+				blue = 255;
+			}
+
+			img(i, j, 0) = red;
+			img(i, j, 1) = green;
+			img(i, j, 2) = blue;
+		}
+	}
+}
 
 void startProgram() 
 {
@@ -890,6 +926,9 @@ void startProgram()
 
 			break;
 		case PurpleFilter:
+			purpleFilter(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 
 			break;
 		case InfraredFilter:
