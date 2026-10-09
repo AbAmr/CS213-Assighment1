@@ -837,6 +837,56 @@ void purpleFilter(Image& img)
 	}
 }
 
+
+// filter 17 (Bouns)
+
+void skewImage(Image& image)
+{
+    double angle;
+    cout << "Enter the skew angle in degrees: ";
+    cin >> angle;
+
+
+    double radians = angle * (3.14159265358979323846 / 180.0);
+    double tanVal = tan(radians);
+
+    int origWidth = image.width;
+    int origHeight = image.height;
+
+    int maxShift =  (origHeight * abs(tanVal));
+    int newWidth = origWidth + maxShift;
+
+    Image skewedImage(newWidth, origHeight);
+
+    for (int y = 0; y < origHeight; ++y) {
+        for (int x = 0; x < newWidth; ++x) {
+            skewedImage.setPixel(x, y, 0, 255);
+            skewedImage.setPixel(x, y, 1, 255);
+            skewedImage.setPixel(x, y, 2, 255);
+        }
+    }
+
+    for (int y = 0; y < origHeight; ++y) {
+       
+        int shift = ((origHeight-y) * tanVal);
+
+        for (int x = 0; x < origWidth; ++x) {
+            int newX = x + shift;
+
+            
+            if (newX >= 0 && newX < newWidth) {
+                for (int c = 0; c < 3; ++c) {
+                    skewedImage.setPixel(newX, y, c, image.getPixel(x, y, c));
+                }
+            }
+        }
+    }
+    image = skewedImage;
+    cout << "Image skewed successfully!\n";
+}
+
+
+
 void startProgram() 
 {
 	Image OriginalImage = loadImagefromUser();
