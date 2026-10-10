@@ -973,7 +973,9 @@ void startProgram()
 			backToFiltersMenu();
 			break;
 		case TvStudioEffect:
-
+			TVScanlinesEffect(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
 			break;
 		case PurpleFilter:
 			purpleFilter(OriginalImage);
