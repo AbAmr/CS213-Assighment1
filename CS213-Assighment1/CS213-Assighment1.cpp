@@ -20,7 +20,7 @@ using namespace std;
 
 //All filter choices
 enum enFiltersChoice {GrayScale =1 , BlackAndWhite , Invert , AddFrame , Flip , Rotate , DarkenAndLighten , Resize
-	,Merge, DetectEdge , Crop, Blur, AddSunlight, TvStudioEffect, PurpleFilter, InfraredFilter , eExit};
+	,Merge, DetectEdge , Crop, Blur, AddSunlight, TvStudioEffect, PurpleFilter, InfraredFilter,skewed, oilPaintingEffect , eExit};
 
 //Asks the user to enter the name of the image to add filter
 Image loadImagefromUser() 
@@ -70,7 +70,9 @@ void printFiltersMenu()
 	cout << "[14] Tv Studio Effect\n";
 	cout << "[15] Purple Filter\n";
 	cout << "[16] Infrared Filter\n";
-	cout << "[17] Exit Program\n";
+	cout << "[17] Skewed Effect\n";
+	cout << "[18] Oil Painting Effect\n";
+	cout << "[19] Exit Program\n";
 	cout << "\n=============================================\n";
 }
 
@@ -81,9 +83,9 @@ short readFilterChoice()
 	cout << "\nEnter your choice...?\n";
 	cin >> filterChoice;
 
-	while (filterChoice < 1 || filterChoice > 17)
+	while (filterChoice < 1 || filterChoice > 19)
 	{
-		cout << "\nEnter your choice \"It must be from 1 to 17\"...?\n";
+		cout << "\nEnter your choice \"It must be from 1 to 19\"...?\n";
 		cin >> filterChoice;
 	}
 
@@ -760,7 +762,6 @@ void TVScanlinesEffect(Image& img)
     }
 }
 
-
 //Merge Images (Filter 9)
 void MergeImages(Image& image1, Image& image2) 
 {
@@ -778,6 +779,7 @@ void MergeImages(Image& image1, Image& image2)
 	}
 }
 
+//Infrared Filter (16)
 void applyInfraredFilter(Image& img)
 {
 	system("cls");
@@ -800,6 +802,7 @@ void applyInfraredFilter(Image& img)
 		}
 	}
 }
+
 //purple filter (15)
 void purpleFilter(Image& img)
 {
@@ -837,11 +840,11 @@ void purpleFilter(Image& img)
 	}
 }
 
-
 // filter 17 (Bouns)
-
 void skewImage(Image& image)
 {
+	system("cls");
+
     double angle;
     cout << "Enter the skew angle in degrees: ";
     cin >> angle;
@@ -885,7 +888,31 @@ void skewImage(Image& image)
     cout << "Image skewed successfully!\n";
 }
 
+// filter 18 (Bouns)
+void applyOilPainting(Image& img)
+{
+	for (int x = 0; x < img.width - 1; x += 2)
+	{
+		for (int y = 0; y < img.height - 1; y += 2)
+		{
+			int red = img(x, y, 0);
+			int green = img(x, y, 1);
+			int blue = img(x, y, 2);
 
+			img(x + 1, y, 0) = red;
+			img(x + 1, y, 1) = green;
+			img(x + 1, y, 2) = blue;
+
+			img(x, y + 1, 0) = red;
+			img(x, y + 1, 1) = green;
+			img(x, y + 1, 2) = blue;
+
+			img(x + 1, y + 1, 0) = red;
+			img(x + 1, y + 1, 1) = green;
+			img(x + 1, y + 1, 2) = blue;
+		}
+	}
+}
 
 void startProgram() 
 {
@@ -981,10 +1008,19 @@ void startProgram()
 			purpleFilter(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
-
 			break;
 		case InfraredFilter:
 			applyInfraredFilter(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case skewed:
+			skewImage(OriginalImage);
+			saveImageByUserName(OriginalImage);
+			backToFiltersMenu();
+			break;
+		case oilPaintingEffect:
+			applyOilPainting(OriginalImage);
 			saveImageByUserName(OriginalImage);
 			backToFiltersMenu();
 			break;
