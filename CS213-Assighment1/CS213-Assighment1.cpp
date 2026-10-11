@@ -1,12 +1,15 @@
 ﻿/*
-  Assignment 1 - OOP Course
-  ---------------------------------------------------------------------------------------------------
+  Assignment 1 - OOP Course (CS213)
+  --------------------------------------------------------------------------------------------------------
   Team Members:
   1. Abdelrahman Amr Rashad           | ID: 20250366 | Section: S29 , S30 | Filters: 4, 8 , 12 , 16
-  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section: S29 , S30 | Filters: 2, 6 , 10 , 14
+  2. Zeyad Ahmed Abdullah             | ID: 20250244 | Section: S29 , S30 | Filters: 2, 6 , 10 , 14 , 17
   3. Ahmed Tarek El-gelany            | ID: 20250035 | Section: S29 , S30 | Filters: 1, 5 , 9  , 13
-  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section: S29 , S30 | Filters: 3, 7 , 11 , 15
-  ---------------------------------------------------------------------------------------------------
+  4. Seif El-Deen Mohamed Hassanin    | ID: 20250310 | Section: S29 , S30 | Filters: 3, 7 , 11 , 15 , 18
+
+  Video Demo and Project Menu have been done by Abdelrahman Amr Rashad
+  Shared Doc has been done by Ahmed Tarek El-gelany
+  --------------------------------------------------------------------------------------------------------
 */
 
 #include <iostream>
@@ -54,15 +57,15 @@ void printFiltersMenu()
 	cout << "=============================================\n";
 	cout << "\t\tFilters Menu";
 	cout << "\n=============================================\n\n";
-	cout << "[1] Grayscale Conversion\n";
-	cout << "[2] Black & White\n";
-	cout << "[3] Invert Image\n";
-	cout << "[4] Add Frame\n";
-	cout << "[5] Flip Image\n";
-	cout << "[6] Rotate Image\n";
-	cout << "[7] Darken and Lighten Image\n";
-	cout << "[8] Resize Image\n";
-	cout << "[9] Merge Images\n";
+	cout << "[1]  Grayscale Conversion\n";
+	cout << "[2]  Black & White\n";
+	cout << "[3]  Invert Image\n";
+	cout << "[4]  Add Frame\n";
+	cout << "[5]  Flip Image\n";
+	cout << "[6]  Rotate Image\n";
+	cout << "[7]  Darken and Lighten Image\n";
+	cout << "[8]  Resize Image\n";
+	cout << "[9]  Merge Images\n";
 	cout << "[10] Detect Edge\n";
 	cout << "[11] Crop Image\n";
 	cout << "[12] Blur Image\n";
@@ -241,7 +244,7 @@ void PerformTheResize(Image & OriginalImage, int resizeChoice)
 
 		while (ratio <= 0)
 		{
-			cout << "\nEnter a posative ratio..?\n";
+			cout << "\nEnter a valid ratio..?\n";
 			cin >> ratio;
 		}
 
@@ -390,14 +393,16 @@ void printCredits()
 {
 	system("cls");
 
-	cout << "=====================================================================\n";
+	cout << "========================================================================\n";
 	cout << "\t\tThe Program has been DONE by\n";
-	cout << "=====================================================================\n";
+	cout << "========================================================================\n";
 	cout << left << setw(32) << "Abdelrahman Amr Rashad" << " | ID: " << "20250366" << " | " << "Filters: 4/8/12/16\n";
-	cout << left << setw(32) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6/10/14\n";
+	cout << left << setw(32) << "Zeyad Ahmed Abdullah" << " | ID: " << "20250244" << " | " << "Filters: 2/6/10/14/17\n";
 	cout << left << setw(32) << "Ahmed Tarek El-gelany" << " | ID: " << "20250035" << " | " << "Filters: 1/5/9/13\n";
-	cout << left << setw(32) << "Seif El-Deen Mohamed Hassanin" << " | ID: " << "20250310" << " | " << "Filters: 3/7/11/15\n";
-	cout << "=====================================================================\n\n";
+	cout << left << setw(32) << "Seif El-Deen Mohamed Hassanin" << " | ID: " << "20250310" << " | " << "Filters: 3/7/11/15/18\n\n";
+	cout << "Video Demo and Project Menu have been done by Abdelrahman Amr Rashad\n";
+	cout << "Shared Doc has been done by Ahmed Tarek El-gelany\n";
+	cout << "========================================================================\n\n";
 
 	cout << "Press any key to end the program....";
 	system("pause>0");
